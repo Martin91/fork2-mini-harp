@@ -1,6 +1,14 @@
 module.exports = function(root) {
-  var connect = require('connect');
-  var serveStatic = require('serve-static');
+  var connect       = require('connect')
+      , serveStatic = require('serve-static')
+      , makeJade    = require('./lib/processor/jade');
 
-  return app = connect().use(serveStatic(root));
+  app = connect()
+          .use(serveStatic(root))
+          .use(function(request, response, next) {
+            request.url == "/current-time" ? response.end((new Date()).toISOString()) : next();
+          })
+          .use(makeJade(root));
+
+  return app;
 }

@@ -9,11 +9,6 @@ var argv    = parseArgs(process.argv)
     , root  = argv._[2] || process.cwd()
     , app   = createMiniHarp(root);
 
-// use a current time middleware
-app.use(function(request, response, next) {
-  request.url == "/current-time" ? response.end((new Date()).toISOString()) : next();
-});
-
 app.listen(port);
 
 console.log("Starting mini-harp on http://localhost:" + port);
